@@ -1,4 +1,5 @@
 # terraform-aws-transfer-custom-idp
+![](https://github.com/gotooooo/terraform-aws-transfer-custom-idp/workflows/lint/badge.svg)
 
 Terraform module which creates [Custom Identity Provider](https://docs.aws.amazon.com/transfer/latest/userguide/authenticating-users.html) for AWS Transfer Family.
 
