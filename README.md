@@ -3,76 +3,9 @@
 
 Terraform module which creates [Custom Identity Provider](https://docs.aws.amazon.com/transfer/latest/userguide/authenticating-users.html) for AWS Transfer Family.
 
-## Usage
+## Examples
 
-```hcl
-resource "aws_s3_bucket" "bucket" {
-  bucket = "bucket_name"
-}
-
-resource "aws_iam_role" "apigw_logging" {
-  name = "apigw-logging-role"
-
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": [
-          "apigateway.amazonaws.com"
-        ]
-      },
-      "Effect": "Allow",
-      "Sid": ""
-    }
-  ]
-}
-EOF
-}
-
-resource "aws_iam_role_policy_attachment" "apigw_logging" {
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
-  role       = aws_iam_role.apigw_logging.name
-}
-
-resource "aws_iam_role" "lambda_basic_execution" {
-  name = "lambda-basic-execution-role"
-
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": [
-          "lambda.amazonaws.com"
-        ]
-      },
-      "Effect": "Allow",
-      "Sid": ""
-    }
-  ]
-}
-EOF
-}
-
-resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-  role       = aws_iam_role.lambda_basic_execution.name
-}
-
-
-module "idp" {
-  source = "git::https://github.com/gotooooo/terraform-aws-transfer-custom-idp.git?ref=0.0.1"
-
-  s3_bucket_arn                       = aws_s3_bucket.bucket.arn
-  iam_role_apigw_logging_arn          = aws_iam_role.apigw_logging.arn
-  iam_role_lambda_basic_execution_arn = aws_iam_role.lambda_basic_execution.arn
-}
-```
+- [Simple custom idp example](https://github.com/gotooooo/terraform-aws-transfer-custom-idp/tree/develop/examples/simple-custom-idp) shows the minimal example.
 
 ## Inputs
 
@@ -95,3 +28,7 @@ module "idp" {
 | Name | Description |
 | :-- | :-- |
 | apigw_deployment_invoke_url | The invoke url used by IdP of Transfer Server |
+
+## License
+
+MIT Licensed. See LICENSE for full details.
